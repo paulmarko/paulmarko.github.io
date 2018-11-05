@@ -10,7 +10,20 @@ my_git_url: https://github.com/paulmarko/face-detector
 my_git_text: Github Repo
 ---
 
-<h2>Facial Detector Screenshots</h2>
+<p><strong>Provide a simple to use tool to upload images, and then process an image 
+    when clicked. An image is processed and analyzed by the Azure Face API. Facial
+    characteristics are returned and displayed directly below the image.
+</strong></p>
+<ul>
+    <li>single page application in ReactJS</li>
+    <li>build modular components in with Material-UI React Components</li>
+    <li>100% JQuery free</li>
+    <li>stand-alone component that can be added to any web page</li>
+    <li>simle REST API to interact with the server and db</li>
+</ul>
+
+<br /><br />
+<h3>Face Detector Screenshots</h3>  
 
 <div class="container">
     <div class="row">
@@ -28,3 +41,239 @@ my_git_text: Github Repo
         </div>
     </div>
 </div>
+
+<br /><br />
+<h3>Application Component Layout</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+<pre>
+&lt;AppHeader /&gt;                <span class="text-warning">- app title head</span>
+&lt;ProgressBar /&gt;              <span class="text-warning">- 5px red progress bar shown/hidden</span>
+&lt;AppHeaderSub&gt;               
+  &lt;ImageUploader&gt;            <span class="text-warning">- image upload button</span>
+&lt;/AppHeaderSub&gt;
+&lt;AppGallery&gt;                 <span class="text-warning">- display gallery row of images</span>
+  &lt;GridList&gt;                 <span class="text-warning">- material-ui grid layout</span>
+    &lt;GridListTile&gt;           <span class="text-warning">- container for image</span>
+        &lt;img /&gt;              <span class="text-warning">- image of person</span>
+        &lt;GridListTitleBar&gt;   <span class="text-warning">- bottom of image action container</span>
+          &lt;DeleteIcon /&gt;     <span class="text-warning">- delete image icon</span>
+        &lt;/GridListTitleBar&gt;  
+    &lt;/GridListTitle&gt;         
+  &lt;/GridList&gt;
+&lt;/AppGallery&gt;
+&lt;Result&gt;                     <span class="text-warning">- output from Azure Face API call</span>
+&lt;SnackbarMessage /&gt;          <span class="text-warning">- bottom center app notifications</span>
+</pre>
+        </div>
+</div>
+
+<br /><br />
+<h3>Main Functions / Methods</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <strong>method</strong>
+        </div>
+        <div class="col-sm">
+            <strong>purpose</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>refreshGallery</p>
+        </div>
+        <div class="col-sm">
+            <p class="text-info">fetches a fresh copy of the gallery images</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>setResetMessage</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">simplified method of showing/clearing app messages</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>onFileChooserChange</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">controls image file input and if no errors starts saving process</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>fileProcess</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">sets app state for current image being uploaded</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>fileUpload(</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">sends file to server to be saved on disk</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>removeImage</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">remove image from app, and on server</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handleGalleryImageClick</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">save state in app of current clicked image</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>analyzeImage</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">send image to Azure Face API for processing</p>
+        </div>
+    </div>
+</div>
+
+
+
+<br /><br />
+<h3>REST API</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Send image to server for processing and storage</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  api/face-image-uploader
+<span class="text-info">Example:</span> api/face-image-uploader
+<span class="text-info">Form Data:</span>
+<pre>
+    file_img_faces: (binary)
+</pre>
+<span class="text-success">Returns:</span>
+{"data":
+    {
+        "id":140,
+        "image_name":"1541438302-Image12.jpg",
+        "full_path":"https:\/\/server.com\/img_faces\/1541438302-Image12.jpg",
+        "delete":1,
+        "remember_token":null,
+        "created_at":"2018-11-05 17:18:22",
+        "updated_at":null
+    }
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Returns all images stored on server</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  api/face-gallery
+<span class="text-info">Example:</span> api/face-gallery
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        {
+            "id":139,
+            "image_name":"1541347553-Image08.jpg",
+            "full_path":"https:\/\/server.com\/img_faces\/1541347553-Image08.jpg",
+            "delete":1,
+            "remember_token":null,
+            "created_at":"2018-11-04 16:05:53",
+            "updated_at":null
+        },
+        {...}
+    ]
+}
+        </pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Removes image from app and server by id</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  api/face-image/
+<span class="text-info">Example:</span> api/face-image/140
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        {
+            "msg":"deleted",
+            "id":"140"
+        }
+    ]
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Azure Face API for processing</strong></p>
+<span class="text-success">Returns:</span>
+<img class="img-fluid" src="./img/azure-face-api.jpg" />         
+        </div>
+    </div>
+</div>
+
+
+
+<br /><br />
+<h3>Database Table: Transactions</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <strong>field / type</strong>
+        </div>
+        <div class="col-sm">
+            <strong>purpose / example</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">id / integer</div>
+        <div class="col-sm">table row / 11</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">image_name / text</div>
+        <div class="col-sm">name plus extension / johnnie.png</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">full_path / text</div>
+        <div class="col-sm">full path on server / https://server.com/img_faces/1540504999-face1.jpg</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">delete / tinyint(1)</div>
+        <div class="col-sm">can image be deleted / 0</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">remember_token / varchar</div>
+        <div class="col-sm">not used / null</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">created_at / datetime</div>
+        <div class="col-sm">transaction cretion time stamp / 2018-11-04 00:24:23</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">updated_at / datetime</div>
+        <div class="col-sm">not used / null</div>
+    </div>
+</div>
+
