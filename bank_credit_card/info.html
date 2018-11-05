@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Credit Card Banking
-description: Single page application with ReactJS, Material-UI React Components, & ReCharts. Application tracks daily credit card transactions. View and search transactions, plus charted history. Make a payment, or create a charge. REST-ful API used for processing. Pusher.com creates live app notifications with server updates.
+description: Single page application with ReactJS, Material-UI React Components, & ReCharts. Application tracks daily credit card transactions. View and search transactions, plus charted history. Make a payment, or create a charge. REST-ful API used for processing. Pusher.com creates live app notifications with each server change, or update.
 pagetype: credit
 show_my_links: true
 my_demo_url: ../bank_credit_card/index.html
@@ -10,7 +10,20 @@ my_git_url: https://github.com/paulmarko/credit-card
 my_git_text: Github Repo
 ---
 
+<h3>Project Goals</h3>
 
+<p><strong>Create a simple and reusable foundation for a numeric presentation.</strong></p>
+<ul>
+    <li>single page application in ReactJS</li>
+    <li>build modular components in with Material-UI React Components</li>
+    <li>100% JQuery free</li>
+    <li>structure code so that it can be used in a variety of projects</li>
+    <li>demonstrate code with a credit card banking application</li>
+    <li>add, filter, search, and view history via charts</li>
+    <li>simle REST API to interact with the server and db</li>
+</ul>
+
+<br /><br />
 <h3>Credit Card Banking Screenshots</h3>  
 
 <div class="container">
@@ -44,4 +57,421 @@ my_git_text: Github Repo
     </div>
 </div>
 
+<br /><br />
+<h3>Application Component Layout</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+<pre>
+&lt;NavMain /&gt;                 <span class="text-warning">- main navigation links for app</span>
+&lt;AccountOverview /&gt;         <span class="text-warning">- display last payment/balance</span>
+&lt;TransactionProgress /&gt;     <span class="text-warning">- 5px red progress bar shown/hidden</span>
+&lt;NavTabs&gt;                   <span class="text-warning">- 4 main tabs for sub-navigation</span>
+
+    (tab) Transaction             <span class="text-warning"></span>
+    &lt;TransactionSelector&gt;   <span class="text-warning">- transactions by selected month</span>
+    &lt;TransactionSearch&gt;     <span class="text-warning">- search transactions by keyword</span>
+    &lt;TransactionTable&gt;      <span class="text-warning">- transaction list</span>
+
+    (tab) History                 <span class="text-warning"></span>
+    &lt;PanelChart /&gt;          <span class="text-warning">- charted history of transactions</span>
+
+    (tab) Payment                 <span class="text-warning"></span>
+    &lt;PaymentPanel /&gt;        <span class="text-warning">- add a payment to credit card</span>
+
+    (tab) Charge                  <span class="text-warning"></span>
+    &lt;ChargePanel /&gt;         <span class="text-warning">- add a charge to credit card</span>
+
+&lt;/NavTabs&gt;                  <span class="text-warning"></span>
+&lt;SnackbarMessage /&gt;         <span class="text-warning">- bottom center app notifications</span>
+</pre>
+        </div>
+</div>
+
+
+<br /><br />
+<h3>Main Functions / Methods</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <strong>method</strong>
+        </div>
+        <div class="col-sm">
+            <strong>purpose</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>createTransactionSelectorDates</p>
+        </div>
+        <div class="col-sm">
+            <p class="text-info">dates for next,prev, and current month</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handleChange</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">sets state for controlled search input</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>setSearchOn</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">sets state for controlled search by</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handleCurrentMonth</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">set params for current month transactions</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handleNextMonth</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">set params for next month transactions</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handlePreviousMonth</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">set params for previous month transactions</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>sortUp</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">resort transactions ascending</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>sortDown</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">resort transactions descending</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handlePanelChargeSubmit</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">error check value and set state for charge</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>handlePanelPaymentSubmit</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">error check value and set state for payment</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>fetchMonthlyTransactions</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">api call to retrieve transaction json array</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>findTransaction</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">search api call to retrieve tranaction json array</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>getLastData</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">api call to retrieve last transaction data</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>getChartData</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">api call to retrieve chart data for history</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>addCharge</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">api post to add charge</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p>addPayment</p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info">api post to add payment</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+                <p></p>
+        </div>
+        <div class="col-sm">
+                <p class="text-info"></p>
+        </div>
+    </div>
+</div>
+
+
+<br /><br />
+<h3>REST API</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Fetch all transactions by year and month</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/trans-ym/
+<span class="text-info">Example:</span> /api/trans-ym/2018/05
+<span class="text-danger">Purpose:</span> fetch all transactions by year and month
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        {
+            "id":183,
+            "user_id":1,
+            "transaction":"Payment",
+            "trans_type":"payment",
+            "trans_amount":"98.34",
+            "trans_balance":"2098.91",
+            "merchant_category":"Credit Card Payment",
+            "merchant_code":"7814",
+            "merchant_name":"Customer Bank Draft",
+            "merchant_transaction_id":"3130042186808787",
+            "transact_at":"2018-11-04 20:03:42",
+            "remember_token":null,
+            "created_at":"2018-11-04 20:03:42",
+            "updated_at":null
+        }
+    ] 
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Search all transactions from "all","charges", or "payments" and keyword</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/trans-search/
+<span class="text-info">Example:</span> /api/trans-search/all/walmart
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        {
+            "id":182,
+            "user_id":1,
+            "transaction":"Walmart Grocery",
+            "trans_type":"charge",
+            "trans_amount":"7.00",
+            "trans_balance":"2197.25",
+            "merchant_category":"Local Store",
+            "merchant_code":"6822",
+            "merchant_name":"Walmart Super Center",
+            "merchant_transaction_id":"5089516850717060",
+            "transact_at":"2018-11-04 00:24:23",
+            "remember_token":null,
+            "created_at":"2018-11-04 00:24:23",
+            "updated_at":null
+        }
+    ]
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Fetches last transaction data.</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/last
+<span class="text-info">Example:</span> /api/last
+<span class="text-success">Returns:</span>
+{"data":
+    {
+        "last_balance":"2098.91",
+        "last_pay_time_stamp":"2018-11-04 20:03:42",
+        "last_pay_amount":"98.34"
+    }
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Fetches transaction history, summation of charges,payments, and balance by month,day,year</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/charting
+<span class="text-info">Example:</span> /api/charting
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        {
+            "balance":"169.60",
+            "payments":"0.00",
+            "charges":"169.60",
+            "transdate":"12-5"
+        },
+        {
+            "balance":"70.60",
+            "payments":"99.00",
+            "charges":"0.00",
+            "transdate":"12-9"
+        },
+        {
+            "balance":"89.16",
+            "payments":"0.00",
+            "charges":"18.56",
+            "transdate":"12-11"
+        },
+        ...
+    ]
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Posts new charge to credit card account.</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/charge
+<span class="text-info">Example:</span> /api/charge
+<span class="text-info">Payload:</span>
+<pre>
+{
+    charge_type: "whole-foods", 
+    charge_value: "34"
+}
+</pre>
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        "success"
+    ]
+}
+</pre>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Posts new payment to credit card account.</strong></p>
+<pre>
+<span class="text-warning">Call:</span>  /api/payment
+<span class="text-info">Example:</span> /api/payment
+<span class="text-info">Payload:</span>
+<pre>
+{
+    payment_value: "90.45"
+}
+</pre>
+<span class="text-success">Returns:</span>
+{"data":
+    [
+        "success"
+    ]
+}
+</pre>         
+        </div>
+    </div>
+</div>
+
+
+<br /><br />
+<h3>Database Table: Transactions</h3> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <strong>field / type</strong>
+        </div>
+        <div class="col-sm">
+            <strong>purpose / example</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">id / integer</div>
+        <div class="col-sm">table row / 11</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">user_id / integer</div>
+        <div class="col-sm">track by user / 1</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">transaction / string</div>
+        <div class="col-sm">store transaction name / Walmart Grocery</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">trans_type / string</div>
+        <div class="col-sm">transaction type / charge</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">trans_amount / decimal(8,2)</div>
+        <div class="col-sm">transaction amount / 7.00</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">trans_balance / decimal(8,2)</div>
+        <div class="col-sm">current balance / 2197.25</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">merchant_category / string</div>
+        <div class="col-sm">merchant info / Local Store</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">merchant_code / string</div>
+        <div class="col-sm">merchant info / 6822</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">merchant_name / string</div>
+        <div class="col-sm">merchant info / Walmart Super Center</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">merchant_transaction_id / string</div>
+        <div class="col-sm">merchant info / 5089516850717060</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">transact_at / datetime</div>
+        <div class="col-sm">transaction time stamp / 2018-11-04 00:24:23</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">remember_token / string</div>
+        <div class="col-sm">not used / null</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">created_at / datetime</div>
+        <div class="col-sm">transaction cretion time stamp / 2018-11-04 00:24:23</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">updated_at / datetime</div>
+        <div class="col-sm">not used / null</div>
+    </div>
+</div>
 
