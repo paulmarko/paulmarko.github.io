@@ -8,7 +8,7 @@
       <a class="nav-item nav-link {% if page.pagetype=='home' %}active{% endif %}" href="../">Home <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link {% if page.pagetype=='facial' %}active{% endif %}" href="../facial_detector/info.html">Facial Detector App</a>
       <a class="nav-item nav-link {% if page.pagetype=='credit' %}active{% endif %}" href="../bank_credit_card/info.html">Credit Card App</a>
-      <!--<a class="nav-item nav-link {% if page.pagetype=='popup' %}active{% endif %}" href="../popup_use_case/info.html">Popup Use Case</a>-->
+      <a class="nav-item nav-link {% if page.pagetype=='popup' %}active{% endif %}" href="../popup_use_case/info.html">Popup Advertising App</a>
     </div>
   </div>
 </nav>
